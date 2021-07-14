@@ -1,0 +1,453 @@
+*,
+*::after,
+*::before {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.myDiv {
+    border: 5px outset red;
+    background-color: lightblue;
+    text-align: center;
+    height: 45%;
+  }
+
+  main{
+      display: block;
+  }
+
+body {
+	--text-color: #f0f0f0;
+	background-image: url("/img/demo1/OpUSBackground.jpg");
+	  /* Set a specific height */
+	  min-height: 500px;
+
+	  /* Create the parallax scrolling effect */
+	  background-attachment: fixed;
+	  background-position: center;
+	  background-repeat: no-repeat;
+	  background-size: cover;
+	--link-color: #ffffff;
+	--link-hover-color: #4d4d4d;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+	color: #ddd;
+	color: var(--text-color);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-size: 1.3em;
+	height: 100vh;
+	overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+#bodyOverflow {
+	--text-color: #f0f0f0;
+	--link-color: #ffffff;
+	--link-hover-color: #4d4d4d;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+	color: #ddd;
+	color: var(--text-color);
+	background: #000;
+	background: var(--background-color);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-size: 1.3em;
+	height: 100vh;
+	overflow: scroll;
+}
+
+#containerDIV {
+    width: 1000px;
+    border: 1px solid black;
+    overflow: hidden; /* will contain if #first is longer than #second */
+}
+
+h1{
+    color: #9b9b9b;
+	font-size: 40px;
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -400%);
+	text-align: center;
+    font-family: cy, sans-serif;
+	font-weight: 700;
+	font-style: normal; 
+}
+
+#introText {
+	width: 4000px;
+	height: 2000px;
+	background-color: black;
+	opacity: 1.0;
+}
+
+#exitText {
+	width: 4000px;
+	height: 2000px;
+	background-color: black;
+	opacity: 1.0;
+	color: white;
+	opacity: 0.0;
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+
+}
+
+#stentInstructions {
+	color: white;
+	opacity: 0.0;
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+}
+
+#startButton {
+	border: none;
+	background-color: inherit;
+	padding: 14px 28px;
+	font-size: 16px;
+	cursor: pointer;
+	display: inline-block;	
+	color: #7d7d7d;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, +200%);
+	text-align: center;
+}
+
+.htmlButton {
+	border: none;
+	background-color: inherit;
+	padding: 14px 28px;
+	font-size: 16px;
+	cursor: pointer;
+	display: inline-block;	
+	color: #7d7d7d;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, +200%);
+	text-align: center;
+}
+
+#popUpBackground {
+	background-color: black;
+  }
+
+.aboutHeader {
+	color: #9b9b9b;
+	font-size: 40px;
+	text-align: center;
+    font-family: cy, sans-serif;
+	font-weight: 700;
+	font-style: normal;
+  }
+
+.aboutText {
+	color: #9b9b9b;
+	text-align: left;
+    font-family: montserrat, sans-serif;
+	font-weight: 400;
+	font-style: normal;
+    line-height: 130%;
+  }
+  
+  #exitText {
+    color: #9b9b9b;
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -60%);
+	text-align: left;
+    font-family: montserrat, sans-serif;
+	font-weight: 400;
+	font-style: normal;
+    line-height: 130%;
+  }
+
+  .inner {
+    position: absolute;
+  }
+
+  #profiles {
+	color: #9b9b9b;
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -100%);
+	text-align: left;
+    font-family: montserrat, sans-serif;
+	font-weight: 400;
+	font-style: normal;
+    line-height: 130%;
+  }
+
+b {
+	text-decoration: none;
+	color: #ddd;
+}
+
+  #instructions2 {
+	color: #9b9b9b;
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, 100%);
+	text-align: center;
+  }
+
+a {
+	text-decoration: none;
+	color: #ddd;
+	color: var(--link-color);
+	outline: none;
+	padding: 0 0 0.01em;
+}
+
+a:hover,
+a:focus {
+	color: #000;
+	color: var(--link-hover-color);
+	border-color: transparent;
+}
+
+.hidden {
+	position: absolute;
+	overflow: hidden;
+	width: 0;
+	height: 0;
+	pointer-events: none;
+}
+
+/* Icons */
+.icon {
+	display: block;
+	width: 1.5em;
+	height: 1.5em;
+	margin: 0 auto;
+	fill: currentColor;
+}
+
+/* Page Loader */
+.js .loading::before {
+	content: '';
+	position: fixed;
+	z-index: 100;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: var(--background-color);
+}
+
+.js .loading::after {
+	content: '';
+	position: fixed;
+	z-index: 10000;
+	top: calc(50% - 40px);
+	left: calc(50% - 40px);
+	width: 80px;
+	height: 80px;
+	opacity: 0.5;
+	border-radius: 50%;
+	background: var(--text-color);
+	animation: loaderAnim 0.8s ease infinite alternate forwards;
+}
+
+@keyframes loaderAnim {
+	to {
+		opacity: 0.8;
+		transform: scale3d(0.25,0.25,1);
+	}
+}
+
+img {
+	width: 7%;
+	border: none;
+}
+
+.rightBottom{
+	width: 12%;
+	border: none;	
+}
+
+
+/* Header */
+.OpUS-header {
+	position: absolute;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	width: 100%;
+	padding: 2em;
+}
+
+.OpUS-header__title {
+	font-size: 1.85em;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+}
+
+.OpUS-header__tagline {
+	margin: 1em 0 0.5em;
+	width: 100%;
+}
+
+.OpUS-header__info {
+	margin: 0;
+	font-weight: bold;
+}
+
+/* Top Navigation Style */
+.OpUS-links {
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 2.5em;
+	margin: 0 1.25em 0 0;
+	text-align: center;
+	white-space: nowrap;
+	border: 2px solid;
+}
+
+.OpUS-links::after {
+	content: '';
+	position: absolute;
+	top: -5%;
+	left: calc(50% - 1px);
+	width: 2px;
+	height: 110%;
+	background: currentColor;
+	transform: rotate3d(0,0,1,22.5deg);
+}
+
+.OpUS-icon {
+	display: inline-block;
+	padding: 0 0.5em;
+	border: none;
+}
+
+/* FOOTER STUFF */
+.OpUS-footer {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	width: 100%;
+	padding: 2em;
+  }
+
+  
+.OpUS-footer__title {
+	font-size: 1.85em;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+}
+
+.OpUS-footer__tagline {
+	margin: 1em 0 0.5em;
+	width: 100%;
+}
+
+.OpUS-footer__info {
+	margin: 0;
+	font-weight: bold;
+}
+
+/* Demo links */
+.wellcome {
+	margin-left: 6em;
+}
+
+.demos {
+	margin: 0 0 0 auto;
+}
+
+.demo {
+	display: inline-block;
+	margin: 0 1em 0.5em 0;
+	padding: 0 0 0.25em;
+}
+
+.demo--current {
+	border-color: transparent;
+	color: var(--link-hover-color);
+	pointer-events: none;
+}
+
+.logoResize{
+	object-fit: contain;
+}
+
+/* Content */
+.content {
+    padding-top: 7em;
+	padding-left: 28%;
+	padding-right: 28%;  
+	padding-bottom: 28%;  
+}
+
+.headerDIV{
+    overflow: none;
+    position: relative;
+}
+
+.sectionDIV{
+    overflow: none;
+    position: relative;
+}
+
+.logos{
+    width:30%; 
+    max-width: 100%; 
+    height: auto;
+	position: relative;
+	padding-right: 0.3em;
+	padding-left: 0.3em;
+	padding-bottom: 1.5em;
+}
+
+#logosDIV{
+    overflow: auto;
+    position: relative;
+	height: 45em;
+}
+
+#scene.clickable{
+	cursor: pointer;
+}
+
+@media screen and (max-width: 60em) {
+	.codrops-header {
+		flex-direction: column;
+		align-items: flex-start;
+		font-size: 0.85em;
+	}
+	.codrops-links {
+		margin: 0 0 1em 0;
+	}
+	.demos {
+		width: 100%;
+		margin: 1em 0 0;
+	}
+}
