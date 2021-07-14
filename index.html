@@ -48,18 +48,17 @@
 				</nav>			
 			</footer>			
 			<div class="content">
-	<!--		<div id = "introText">
-				The canvas where ThreeJs renders the WebGL
+			<div id = "introText">
+				<!-- The canvas where ThreeJs renders the WebGL -->
 				<p id = "welcomeHeader">Welcome to the OpUS 
 				<br>
 				virtual experience</p>
 				<p id = "instructions"> Use your mouse to move around the space and illuminate the walls.
 				<br>
 				What do you see and hear?</p>
-				<button id="startButton" onclick="startExperience()">Begin Experience</button>
+				<button id="startButton" onclick="location.href='enter.html';" style="cursor: pointer;">continue</button>
 				<rect width="400px" height="900 px" style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" />
 			</div>
-		-->
 				<p id = "stentInstructions">You encounter an abnormality. Click on the area repeatedly with your mouse to expand the space and improve the flow.</p>
 				<p id = "obstructionInstructions">There is something in your way. Click on the obstruction repeatedly with your mouse to remove it.</p>
 				<canvas id="scene">
@@ -85,24 +84,6 @@
 				</canvas>
 			</div>
 
-		<!--</main>-->
-
-		<script>
-			function startExperience(){
-			  this.header = document.querySelector('#introText');
-    		  this.header.remove();
-			//   var js0 = document.createElement("script");
-			//   js0.scr = "js/three.min.js";			  
-			//   var js1 = document.createElement("script");
-			//   js1.scr = "js/stats.module.js";
-			//   var js2 = document.createElement("script");
-			//   js2.scr = "js/OrbitControls.js";			  
-			//   var js3 = document.createElement("script");
-			//   js3.scr = "js/OBJLoader.js";			
-			//   var js4 = document.createElement("script");
-			//   js4.scr = "demo1.js";				    
-			 }	
-
 		</script>
 
 		<script id="tunnelVertexShader" type="x-shader/x-vertex">
@@ -118,7 +99,7 @@
 		<script type = "module" src="js/stats.module.js"></script>
 		<script type = "module" src = "js/OrbitControls.js"></script>
 		<script src="js/OBJLoader.js"></script>
-		<script type = "module" src = "demo1.js"></script>		
+		<script type = "module" src = "demo1.js"></script>
 		
 		<script id="tunnelFragmentShader" type="x-shader/x-fragment">
 			varying vec3 vPosition;
