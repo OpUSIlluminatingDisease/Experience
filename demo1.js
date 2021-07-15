@@ -27,7 +27,8 @@ var myAnimator;
 // CLOCK
 
 var clock = new THREE.Clock();
-var myTime = 50000000;
+var myTime = clock.getElapsedTime();
+//var myTime = 50000000;
 var time = 0;
 var startTimeFlag = 0;
 
@@ -105,7 +106,7 @@ var noiseZ5 = 0.02;
 
 //AUDIO SHIFT
 var startFrequency = 100;
-var endFrequency = 768;
+var endFrequency = 500;
 
 //AMBIANCE
 var numberOfParticles = 50;
@@ -304,7 +305,7 @@ Tunnel.prototype.audioStart = function () {
 
     sound.setBuffer(buffer);
     sound.setLoop(true);
-    sound.setVolume(8);
+    sound.setVolume(6);
     sound.play();
 
   });
@@ -312,6 +313,50 @@ Tunnel.prototype.audioStart = function () {
   this.camera.add(this.frequencyShift);
 
 }
+
+//Version with less interference: Credit to Stephen Thompson @thompson318
+
+// Tunnel.prototype.audioStart = function () {
+
+// //  const listener = new THREE.AudioListener();
+//  // this.camera.add(listener);
+//   const listener0 = new THREE.AudioListener();
+//   const listener1 = new THREE.AudioListener();
+//   this.camera.add(listener0);
+//   this.camera.add(listener1);
+
+//   const audioLoader = new THREE.AudioLoader();
+
+//   //this.frequencyShift = new THREE.PositionalAudio(listener);
+//   this.frequencyShift = new THREE.PositionalAudio(listener0);
+
+//   //this.oscillator = listener.context.createOscillator();
+//   this.oscillator = listener0.context.createOscillator();
+//   this.oscillator.type = 'sine';
+//   this.oscillator.frequency.setValueAtTime(200, this.frequencyShift.context.currentTime);
+//   this.oscillator.start(0);
+
+//   this.frequencyShift.setNodeSource(this.oscillator);
+//   this.frequencyShift.setRefDistance(20);
+//   //this.frequencyShift.setVolume(0.2);
+//   this.frequencyShift.setVolume(0.01);
+
+//   //const sound = new THREE.Audio(listener);
+//   const sound = new THREE.Audio(listener1);
+
+//  // audioLoader.load('sounds/X3Loud2.mp3', function (buffer) {
+//   audioLoader.load('sounds/X3Loud8_denoised.wav', function (buffer) {
+
+//     sound.setBuffer(buffer);
+//     sound.setLoop(true);
+//     //sound.setVolume(8);
+//     sound.setVolume(1);
+//     sound.play();
+
+//   });
+
+//   this.camera.add(this.frequencyShift);
+// }
 
 // ADD BLOOD PARTICLES - (not looped)
 
@@ -386,7 +431,7 @@ Tunnel.prototype.createMesh = function () {
   this.tubeMesh = new THREE.Mesh(this.tubeGeometry, this.tubeMaterial);
 
   // ADD AUDIO
-  // this.tubeMesh.add(this.sound);
+   this.tubeMesh.add(this.sound);
 
   // TEXTURE TUNNEL
 
@@ -711,10 +756,10 @@ Tunnel.prototype.onDocumentMouseDown = function (event) {
   // var audioCtx = new AudioContext();
   // audioCtx.resume();
   
-  if(startTimeFlag == 0){
-    myTime = clock.getElapsedTime();
-    startTimeFlag = 1;
-  }
+  // if(startTimeFlag == 0){
+//    myTime = clock.getElapsedTime();
+  //   startTimeFlag = 1;
+  // }
 
   console.log(modeFlag);
   console.log(clickFlag);
@@ -1166,7 +1211,7 @@ Tunnel.prototype.render = function () {
         //modeFlag = Math.floor((Math.random() * 2));
 
         //Flag to time the next interaction
-       // TobstructionStart = TobstructionStartMin + (Math.random() * TobstructionRange);
+        TobstructionStart = TobstructionStartMin + (Math.random() * TobstructionRange);
 
       }
 
