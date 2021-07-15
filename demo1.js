@@ -129,6 +129,7 @@ var doneFlag = 0;
 var latheFlag = 0;
 var clickFlag = 0;
 var textRemoveFlag = 0;
+var removeClearedTextFlag = 0;
 
 var Tstart = 5;
 var TstartMin = 15;
@@ -762,9 +763,37 @@ Tunnel.prototype.onDocumentMouseDown = function (event) {
         blockageCounter = 0;
         //clickFlag = 0;
 
-      }
+        this.endPlaneGeometry = new THREE.PlaneGeometry(1, 1, 2, 2);
+        this.endPlaneMaterial = new THREE.MeshBasicMaterial({
+          color: 0x000000,
+          transparent: true,
+          opacity: 0.8,
+          side: THREE.DoubleSide
+        });
 
+        this.endPlane = new THREE.Mesh(this.planeGeometry, this.planeMaterial);
+
+        this.endPlane.position.z = 0.03;
+        this.endPlane.position.x = 0;
+        this.endPlane.rotateZ(Math.PI / 2);
+
+        this.scene.add(this.endPlane);
+
+        //INSERT TEXT HERE
+        this.clearedInstructionsText = document.getElementById("clearedInstructions");
+        this.clearedInstructionsText.style.opacity = "1.0";
+
+      }
     }
+
+    if(removeClearedTextFlag == 1){
+      this.clearedInstructionsText.style.opacity = "0.0";
+      this.scene.remove(this.endPlane);
+      removeClearedTextFlag = 0;
+
+      modeFlag = Math.floor((Math.random() * 2));
+    }
+
   } else if (modeFlag == 1) {
 
     console.log(modeFlag);
@@ -835,8 +864,36 @@ Tunnel.prototype.onDocumentMouseDown = function (event) {
         blockageCounter = 0;
         //clickFlag = 0;
 
+        this.endPlaneGeometry = new THREE.PlaneGeometry(1, 1, 2, 2);
+        this.endPlaneMaterial = new THREE.MeshBasicMaterial({
+          color: 0x000000,
+          transparent: true,
+          opacity: 0.8,
+          side: THREE.DoubleSide
+        });
+
+        this.endPlane = new THREE.Mesh(this.planeGeometry, this.planeMaterial);
+
+        this.endPlane.position.z = 0.03;
+        this.endPlane.position.x = 0;
+        this.endPlane.rotateZ(Math.PI / 2);
+
+        this.scene.add(this.endPlane);
+
+        //INSERT TEXT HERE
+        this.clearedInstructionsText = document.getElementById("clearedInstructions");
+        this.clearedInstructionsText.style.opacity = "1.0";
+
       }
 
+    }
+
+    if(removeClearedTextFlag == 1){
+      this.clearedInstructionsText.style.opacity = "0.0";
+      this.scene.remove(this.endPlane);
+      removeClearedTextFlag = 0;
+
+      modeFlag = Math.floor((Math.random() * 2));
     }
 
   }
@@ -989,18 +1046,19 @@ Tunnel.prototype.render = function () {
 
       if (doneFlag == 1) {
         //clock = clock;
+        removeClearedTextFlag = 1;
+
         myTime = clock.getElapsedTime();
         doneFlag = 0;
-console.log("DONE WITH 0");
-        //modeFlag = 1;
+        console.log("DONE WITH 0");
         clickFlag = 0;
         rectangleFlag = 1;
 
         //Flag for next type of interaction
-        modeFlag = Math.floor((Math.random() * 2));
+        //modeFlag = Math.floor((Math.random() * 2));
 
         //Time interval randomisation
-        //Tstart = TstartMin + (Math.random() * Trange);
+        Tstart = TstartMin + (Math.random() * Trange);
 
       }
 
@@ -1086,6 +1144,9 @@ console.log("DONE WITH 0");
       //THIS IS WHERE THE CODE REFERENCES THE DONE FLAG SECTION
 
       if (doneFlag == 1) {
+
+        removeClearedTextFlag = 1;
+
         //clock = clock;
         this.scene.remove(this.obstructionMesh);
         myTime = clock.getElapsedTime();
@@ -1102,7 +1163,7 @@ console.log("DONE WITH 0");
         //myAnimator.update(200*delta);   //new
 
         //Flag for next type of interaction
-        modeFlag = Math.floor((Math.random() * 2));
+        //modeFlag = Math.floor((Math.random() * 2));
 
         //Flag to time the next interaction
        // TobstructionStart = TobstructionStartMin + (Math.random() * TobstructionRange);
