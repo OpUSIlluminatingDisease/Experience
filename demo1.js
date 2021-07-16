@@ -144,7 +144,13 @@ var TobstructionRange = 10; //obstruction can show up between 5 and 15 sec
 //OBSTRUCTION STUFF
 
 var modeFlag = 1;
-var obstructionShift = 0.05;
+
+var radius = 0.05;
+var angle  = Math.random()*360;
+//var obstructionShiftX = radius * Math.cos(Math.PI * 2 * angle / 360);
+var y = radius * Math.cos(Math.PI * 2 * angle / 360);
+
+var obstructionShiftX = 0.05;
 var widthSegments = 23;
 var heightSegments = 23;
 
@@ -281,82 +287,82 @@ Tunnel.prototype.init = function () {
 
 // AUDIO FUNCTIONS - (not looped)
 
-Tunnel.prototype.audioStart = function () {
-
-  const listener = new THREE.AudioListener();
-  this.camera.add(listener);
-
-  const audioLoader = new THREE.AudioLoader();
-
-  this.frequencyShift = new THREE.PositionalAudio(listener);
-
-  this.oscillator = listener.context.createOscillator();
-  this.oscillator.type = 'sine';
-  this.oscillator.frequency.setValueAtTime(200, this.frequencyShift.context.currentTime);
-  this.oscillator.start(0);
-
-  this.frequencyShift.setNodeSource(this.oscillator);
-  this.frequencyShift.setRefDistance(20);
-  this.frequencyShift.setVolume(0.2);
-
-  const sound = new THREE.Audio(listener);
-
-  audioLoader.load('sounds/X3Loud2.mp3', function (buffer) {
-
-    sound.setBuffer(buffer);
-    sound.setLoop(true);
-    sound.setVolume(6);
-    sound.play();
-
-  });
-
-  this.camera.add(this.frequencyShift);
-
-}
-
-//Version with less interference: Credit to Stephen Thompson @thompson318
-
 // Tunnel.prototype.audioStart = function () {
 
-// //  const listener = new THREE.AudioListener();
-//  // this.camera.add(listener);
-//   const listener0 = new THREE.AudioListener();
-//   const listener1 = new THREE.AudioListener();
-//   this.camera.add(listener0);
-//   this.camera.add(listener1);
+//   const listener = new THREE.AudioListener();
+//   this.camera.add(listener);
 
 //   const audioLoader = new THREE.AudioLoader();
 
-//   //this.frequencyShift = new THREE.PositionalAudio(listener);
-//   this.frequencyShift = new THREE.PositionalAudio(listener0);
+//   this.frequencyShift = new THREE.PositionalAudio(listener);
 
-//   //this.oscillator = listener.context.createOscillator();
-//   this.oscillator = listener0.context.createOscillator();
+//   this.oscillator = listener.context.createOscillator();
 //   this.oscillator.type = 'sine';
 //   this.oscillator.frequency.setValueAtTime(200, this.frequencyShift.context.currentTime);
 //   this.oscillator.start(0);
 
 //   this.frequencyShift.setNodeSource(this.oscillator);
 //   this.frequencyShift.setRefDistance(20);
-//   //this.frequencyShift.setVolume(0.2);
-//   this.frequencyShift.setVolume(0.01);
+//   this.frequencyShift.setVolume(0.2);
 
-//   //const sound = new THREE.Audio(listener);
-//   const sound = new THREE.Audio(listener1);
+//   const sound = new THREE.Audio(listener);
 
-//  // audioLoader.load('sounds/X3Loud2.mp3', function (buffer) {
-//   audioLoader.load('sounds/X3Loud8_denoised.wav', function (buffer) {
+//   audioLoader.load('sounds/X3Loud2.mp3', function (buffer) {
 
 //     sound.setBuffer(buffer);
 //     sound.setLoop(true);
-//     //sound.setVolume(8);
 //     sound.setVolume(1);
 //     sound.play();
 
 //   });
 
 //   this.camera.add(this.frequencyShift);
+
 // }
+
+//Version with less interference: Credit to Stephen Thompson @thompson318
+
+Tunnel.prototype.audioStart = function () {
+
+//  const listener = new THREE.AudioListener();
+ // this.camera.add(listener);
+  const listener0 = new THREE.AudioListener();
+  const listener1 = new THREE.AudioListener();
+  this.camera.add(listener0);
+  this.camera.add(listener1);
+
+  const audioLoader = new THREE.AudioLoader();
+
+  //this.frequencyShift = new THREE.PositionalAudio(listener);
+  this.frequencyShift = new THREE.PositionalAudio(listener0);
+
+  //this.oscillator = listener.context.createOscillator();
+  this.oscillator = listener0.context.createOscillator();
+  this.oscillator.type = 'sine';
+  this.oscillator.frequency.setValueAtTime(200, this.frequencyShift.context.currentTime);
+  this.oscillator.start(0);
+
+  this.frequencyShift.setNodeSource(this.oscillator);
+  this.frequencyShift.setRefDistance(20);
+  //this.frequencyShift.setVolume(0.2);
+  this.frequencyShift.setVolume(0.01);
+
+  //const sound = new THREE.Audio(listener);
+  const sound = new THREE.Audio(listener1);
+
+ // audioLoader.load('sounds/X3Loud2.mp3', function (buffer) {
+  audioLoader.load('sounds/X3Loud8_denoised.wav', function (buffer) {
+
+    sound.setBuffer(buffer);
+    sound.setLoop(true);
+    //sound.setVolume(8);
+    sound.setVolume(1);
+    sound.play();
+
+  });
+
+  this.camera.add(this.frequencyShift);
+}
 
 // ADD BLOOD PARTICLES - (not looped)
 
@@ -841,11 +847,11 @@ Tunnel.prototype.onDocumentMouseDown = function (event) {
 
   } else if (modeFlag == 1) {
 
-    console.log(modeFlag);
-    console.log(clickFlag);
-    console.log(mouseFlag);
-    console.log(textRemoveFlag);
-    console.log(obstructionShift);
+    // console.log(modeFlag);
+    // console.log(clickFlag);
+    // console.log(mouseFlag);
+    // console.log(textRemoveFlag);
+    console.log(obstructionShiftX);
 
     //if (clickFlag == 1 && mouseFlag == 1) {
       if (clickFlag == 1) {
@@ -868,7 +874,7 @@ Tunnel.prototype.onDocumentMouseDown = function (event) {
 
       // this.scene.remove(this.depthLathe);
 
-      if (obstructionShift < 0.04) {
+      if (obstructionShiftX < 0.04) {
 
         this.scene.remove(this.obstructionMesh)
 
@@ -887,17 +893,24 @@ Tunnel.prototype.onDocumentMouseDown = function (event) {
         });
         this.obstructionMesh = new THREE.Mesh(this.obstructionGeometry, this.obstructionMaterial);
         this.obstructionMesh.position.z = 0.5;
-        this.obstructionMesh.position.x = obstructionShift;
+        this.obstructionMesh.position.x = obstructionShiftX;
 
         latheFlag = 1; //this is to avoid redrawing every time it loops
         blockageCounter += 1; //adds time
-        obstructionShift += 0.001;
+
+        obstructionShiftX += 0.001;
+
+        // if (obstructionShiftX > 0){
+        //   obstructionShiftX += 0.001;
+        // } else {
+        // obstructionShiftX -= 0.001;
+        // }
         //widthSegments-=1;
         //heightSegments-=1;
 
         this.scene.add(this.obstructionMesh);
 
-      } else if (obstructionShift > 0.034) {
+      } else if (obstructionShiftX > 0.034) {
         // this.scene.remove( this.lathe );
         this.scene.remove(this.obstructionGeometry);
         this.tubeReflector.material.uniforms.speed.value = -0.1;
@@ -1132,11 +1145,11 @@ Tunnel.prototype.render = function () {
         });
         this.obstructionMesh = new THREE.Mesh(this.obstructionGeometry, this.obstructionMaterial);
         this.obstructionMesh.position.z = 0.5;
-        this.obstructionMesh.position.x = obstructionShift;
+        this.obstructionMesh.position.x = obstructionShiftX;
 
         latheFlag = 1; //this is to avoid redrawing every time it loops
         blockageCounter += 1; //adds time
-        obstructionShift -= 0.001;
+        obstructionShiftX -= 0.001;
 
         //console.log(obstructionShift);
         //heightSegments+=1; //increases height segments
@@ -1147,12 +1160,12 @@ Tunnel.prototype.render = function () {
       }
 
       if (clock.getElapsedTime() - myTime > TobstructionStart + blockageCounter) {
-        if (obstructionShift > 0.01 && clickFlag == 0) {
+        if (obstructionShiftX > 0.01 && clickFlag == 0) {
           latheFlag = 0;
         }
       }
 
-      if (obstructionShift <= 0.01 && rectangleFlag == 1 && clickFlag == 0) {
+      if (obstructionShiftX <= 0.01 && rectangleFlag == 1 && clickFlag == 0) {
 
         this.tubeReflector.material.uniforms.speed.value = 0;
 

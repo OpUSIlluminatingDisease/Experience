@@ -273,8 +273,9 @@ a:focus {
 	}
 }
 
-img {
-	width: 7%;
+.logoTop {
+	width: 9%;
+	height: auto;
 	border: none;
 }
 
