@@ -27,8 +27,8 @@ var myAnimator;
 // CLOCK
 
 var clock = new THREE.Clock();
-//var myTime = clock.getElapsedTime();
-var myTime = 50000000;
+var myTime = clock.getElapsedTime();
+//var myTime = 50000000;
 var time = 0;
 var startTimeFlag = 0;
 
@@ -106,7 +106,7 @@ var noiseZ5 = 0.02;
 
 //AUDIO SHIFT
 var startFrequency = 100;
-var endFrequency = 500;
+var endFrequency = 650;
 
 //AMBIANCE
 var numberOfParticles = 50;
@@ -145,12 +145,24 @@ var TobstructionRange = 10; //obstruction can show up between 5 and 15 sec
 
 var modeFlag = 1;
 
-var radius = 0.05;
+var radStart = 0.04;
+var radStop = 0.01;
 var angle  = Math.random()*360;
-//var obstructionShiftX = radius * Math.cos(Math.PI * 2 * angle / 360);
-var y = radius * Math.cos(Math.PI * 2 * angle / 360);
+var xStart = radStart * Math.cos(angle);
+var yStart = radStart * Math.sin(angle);
 
-var obstructionShiftX = 0.05;
+var xStop = radStop * Math.cos(angle);
+var yStop = radStop * Math.sin(angle);
+var n=10; //max obstruction shift
+
+var xCurrent = xStart;
+var yCurrent = yStart;
+
+var deltaX = (xStop-xStart)/n
+var deltaY = (yStop-yStart)/n
+
+
+//var obstructionShiftX = 0.05;
 var widthSegments = 23;
 var heightSegments = 23;
 
@@ -345,7 +357,7 @@ Tunnel.prototype.audioStart = function () {
   this.frequencyShift.setNodeSource(this.oscillator);
   this.frequencyShift.setRefDistance(20);
   //this.frequencyShift.setVolume(0.2);
-  this.frequencyShift.setVolume(0.01);
+  this.frequencyShift.setVolume(0.08);
 
   //const sound = new THREE.Audio(listener);
   const sound = new THREE.Audio(listener1);
@@ -356,7 +368,7 @@ Tunnel.prototype.audioStart = function () {
     sound.setBuffer(buffer);
     sound.setLoop(true);
     //sound.setVolume(8);
-    sound.setVolume(1);
+    sound.setVolume(7);
     sound.play();
 
   });
@@ -762,17 +774,12 @@ Tunnel.prototype.onDocumentMouseDown = function (event) {
   // var audioCtx = new AudioContext();
   // audioCtx.resume();
   
-  if(startTimeFlag == 0){
-   myTime = clock.getElapsedTime();
-    startTimeFlag = 1;
-  }
+  console.log("mouseClick");
 
-  console.log(modeFlag);
-  console.log(clickFlag);
-  console.log(mouseFlag);
-  console.log(textRemoveFlag);
-  console.log(doneFlag);
-  console.log(blockageRadius);
+  // if(startTimeFlag == 0){
+  //  myTime = clock.getElapsedTime();
+  //   startTimeFlag = 1;
+  // }
 
   if (modeFlag == 0) {
     //if (clickFlag == 1 && mouseFlag == 1) {
@@ -846,37 +853,28 @@ Tunnel.prototype.onDocumentMouseDown = function (event) {
     }
 
   } else if (modeFlag == 1) {
-
-    // console.log(modeFlag);
-    // console.log(clickFlag);
-    // console.log(mouseFlag);
-    // console.log(textRemoveFlag);
-    console.log(obstructionShiftX);
-
-    //if (clickFlag == 1 && mouseFlag == 1) {
-      if (clickFlag == 1) {
+      
+    if (clickFlag == 1) {
       if (textRemoveFlag == 0) {
-
-        //this.stentInstructionsText = document.querySelector('#stentInstructions');
-        //this.stentInstructionsText.remove();
-        console.log("Hi, sphere mouseFlag I'm here");
 
         this.obstructionInstructionsText.style.opacity = "0.0";
         this.scene.remove(this.plane);
 
-
-        // this.stentInstructionsText.style.opacity = "0.0";
         textRemoveFlag = 1;
-
-        // this.scene.remove(this.plane);
 
       }
 
-      // this.scene.remove(this.depthLathe);
+      
+      if (Math.pow(xCurrent, 2) + Math.pow(yCurrent, 2) < Math.pow(radStart, 2)) {
 
-      if (obstructionShiftX < 0.04) {
-
+        console.log("TEST2");
         this.scene.remove(this.obstructionMesh)
+
+        xCurrent -= deltaX;
+        yCurrent -= deltaY;
+
+        console.log(xCurrent);
+        console.log(deltaX);
 
         //draw the mesh
         this.obstructionGeometry = new THREE.SphereGeometry(0.02, widthSegments, heightSegments);
@@ -893,24 +891,15 @@ Tunnel.prototype.onDocumentMouseDown = function (event) {
         });
         this.obstructionMesh = new THREE.Mesh(this.obstructionGeometry, this.obstructionMaterial);
         this.obstructionMesh.position.z = 0.5;
-        this.obstructionMesh.position.x = obstructionShiftX;
+        this.obstructionMesh.position.x = xCurrent;
+        this.obstructionMesh.position.y = yCurrent;
 
         latheFlag = 1; //this is to avoid redrawing every time it loops
         blockageCounter += 1; //adds time
 
-        obstructionShiftX += 0.001;
-
-        // if (obstructionShiftX > 0){
-        //   obstructionShiftX += 0.001;
-        // } else {
-        // obstructionShiftX -= 0.001;
-        // }
-        //widthSegments-=1;
-        //heightSegments-=1;
-
         this.scene.add(this.obstructionMesh);
 
-      } else if (obstructionShiftX > 0.034) {
+      } else {
         // this.scene.remove( this.lathe );
         this.scene.remove(this.obstructionGeometry);
         this.tubeReflector.material.uniforms.speed.value = -0.1;
@@ -950,6 +939,19 @@ Tunnel.prototype.onDocumentMouseDown = function (event) {
       this.clearedInstructionsText.style.opacity = "0.0";
       this.scene.remove(this.endPlane);
       removeClearedTextFlag = 0;
+
+      angle  = Math.random()*360;
+      xStart = radStart * Math.cos(angle);
+      yStart = radStart * Math.sin(angle);
+
+      xStop = radStop * Math.cos(angle);
+      yStop = radStop * Math.sin(angle);
+
+      xCurrent = xStart;
+      yCurrent = yStart;
+
+      deltaX = (xStop-xStart)/n
+      deltaY = (yStop-yStart)/n
 
       modeFlag = Math.floor((Math.random() * 2));
     }
@@ -1130,6 +1132,9 @@ Tunnel.prototype.render = function () {
 
         this.scene.remove(this.obstructionMesh)
 
+        widthSegments = 23;
+        heightSegments = 23;
+
         //draw the mesh
         this.obstructionGeometry = new THREE.SphereGeometry(0.02, widthSegments, heightSegments);
         this.obstructionMaterial = new THREE.MeshStandardMaterial({
@@ -1145,27 +1150,27 @@ Tunnel.prototype.render = function () {
         });
         this.obstructionMesh = new THREE.Mesh(this.obstructionGeometry, this.obstructionMaterial);
         this.obstructionMesh.position.z = 0.5;
-        this.obstructionMesh.position.x = obstructionShiftX;
+        this.obstructionMesh.position.x = xCurrent;
+        this.obstructionMesh.position.y = yCurrent;
+
+
+        xCurrent += deltaX;
+        yCurrent += deltaY;
 
         latheFlag = 1; //this is to avoid redrawing every time it loops
         blockageCounter += 1; //adds time
-        obstructionShiftX -= 0.001;
-
-        //console.log(obstructionShift);
-        //heightSegments+=1; //increases height segments
-        //widthSegments+=1;  //increases width segments
 
         this.scene.add(this.obstructionMesh);
 
       }
 
       if (clock.getElapsedTime() - myTime > TobstructionStart + blockageCounter) {
-        if (obstructionShiftX > 0.01 && clickFlag == 0) {
+        if ((Math.pow(xCurrent, 2) + Math.pow(yCurrent, 2) > Math.pow(radStop, 2) && clickFlag == 0)) {
           latheFlag = 0;
         }
       }
 
-      if (obstructionShiftX <= 0.01 && rectangleFlag == 1 && clickFlag == 0) {
+      if ((Math.pow(xCurrent, 2) + Math.pow(yCurrent, 2) <= Math.pow(radStop, 2) && rectangleFlag == 1 && clickFlag == 0)) {
 
         this.tubeReflector.material.uniforms.speed.value = 0;
 
